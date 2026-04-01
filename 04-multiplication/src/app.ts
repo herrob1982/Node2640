@@ -1,24 +1,35 @@
 
-const fs = require("fs");
+// import process = require("node:process");
+// console.log(process.argv);
+
+//import console from "node:console";
+
+//const [ tsnode, app, ...args] = process.argv;
+//const yarg = require('./config/plugins/args.yargs.plugin');
+
+ //import { argv } from './config/plugins/args.yargs.plugin';
+
+ //const ccc = require('./config/plugins/args.yargs.plugin');
+
+// console.log(argv.b);
+//import yargs from 'yargs';
+import { argv } from './config/plugins/args.yargs.plugin.ts';
 
 
-let outmessage = '';
-const base = 5;
+(async() => {
+    await main();
+    console.log('Process finished');
+})();
 
-const headerMessage= `
-===============================
- tabla del ${base}
-===============================\n
-`;
+//funciones anonimas autoejecutables
+async function main() {
+    
+    console.log('Hello world');
 
-for (let i = 1; i <= 10; i++) {
-    outmessage += `${base} x ${i} = ${base * i}\n`;
+    console.log('Argumentos: ', argv);
+
+    const base = argv.base;
+    console.log('Base: ', base);
+
+
 }
-
-
-const outputPath = `ouputs`;
-fs.mkdirSync(outputPath, { recursive: true });
-
-fs.writeFileSync(`${outputPath}/tabla-${base}.txt`, headerMessage + outmessage);
-console.log(headerMessage + outmessage);
-

@@ -13,7 +13,9 @@
 
 // console.log(argv.b);
 //import yargs from 'yargs';
+import { Server } from 'node:http';
 import { argv } from './config/plugins/args.yargs.plugin.ts';
+import { ServerApp } from './presentation/server-app.ts';
 
 
 (async() => {
@@ -24,12 +26,18 @@ import { argv } from './config/plugins/args.yargs.plugin.ts';
 //funciones anonimas autoejecutables
 async function main() {
     
-    console.log('Hello world');
+    // console.log('Hello world');
+    // console.log('Argumentos: ', argv);
+    // const base = argv.base;
+    // console.log('Base: ', base);
 
-    console.log('Argumentos: ', argv);
-
-    const base = argv.base;
-    console.log('Base: ', base);
-
+    const { b:base, l:limit, s:showTable, f:fileName, d:fileDestination } = argv;
+    ServerApp.run({
+        base,
+        limit,
+        showTable,
+        fileName,
+        fileDestination
+    });
 
 }

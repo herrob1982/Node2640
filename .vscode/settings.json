@@ -1,0 +1,11 @@
+{
+    "cSpell.words": [
+        "outmessage"
+    ],
+    "cSpell.ignoreRegExpList": [
+    "\".*?\"",   // ignora strings entre comillas dobles
+    "'.*?'"   ,   // ignora strings entre comillas simples
+    "//.*",          // comentarios de una línea
+    "/\\*[\\s\\S]*?\\*/"  // comentarios multilínea
+    ]
+}

@@ -1,3 +1,4 @@
+import { envs } from "./config/plugins/envs.plugin";
 import { Server } from "./presentation/server";
 
 
@@ -8,6 +9,13 @@ import { Server } from "./presentation/server";
 
 
 function main() {
-     Server.start();
+    // Server.start();
+//console.log('email:' + process.env.MAILER_EMAIL);
+console.log('port:' + envs.PORT);
+console.log('prod:' + envs.PROD);
+console.log('email:' + envs.MAILER_EMAIL);
+console.log('secret key:' + envs.MAILER_SECRET_KEY);
+
+
 }
 

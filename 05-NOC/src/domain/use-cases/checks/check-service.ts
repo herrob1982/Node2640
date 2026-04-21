@@ -1,3 +1,4 @@
+
 import { error } from "node:console";
 import { LogRepository } from "../../repository/log.repository";
 import { LogEntity, LogSeverityLevel } from "../../entities/log.entity";
@@ -34,7 +35,15 @@ export class CheckService implements CheckServiceUseCase {
                 
             } 
 
-            const log = new LogEntity(`Service ${url} working`, LogSeverityLevel.low);
+            //const log = new LogEntity(`Service ${url} working`, LogSeverityLevel.low);
+
+            const log = new LogEntity({
+                message: `Service ${url} working`,
+                level: LogSeverityLevel.low,
+                origin: "Check-Service.ts"
+            });
+
+
             this.logRepository.saveLog(log);
             this.successCallBack && this.successCallBack();
            // console.log(`La solicitud a ${url} fue exitosa.`);
@@ -44,7 +53,12 @@ export class CheckService implements CheckServiceUseCase {
             
             const errorMessage = `${error}`
 
-             const log = new LogEntity(`Service ${url} failed: ${errorMessage}`, LogSeverityLevel.high);
+             //const log = new LogEntity(`Service ${url} failed: ${errorMessage}`, LogSeverityLevel.high);
+              const log = new LogEntity({
+                message: `Service ${url} failed: ${errorMessage}`,
+                level: LogSeverityLevel.high,
+                origin: "Check-Service.ts"
+            });
             this.logRepository.saveLog(log);
 
 

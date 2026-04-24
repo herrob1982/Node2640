@@ -1,3 +1,4 @@
+import { join } from "node:path";
 
 export enum LogSeverityLevel {
     low = "low",
@@ -32,8 +33,11 @@ export class LogEntity {
     }
 
 
-    static fromJson = (json: string): LogEntity => {
+    static fromJson = (json: string ): LogEntity => {
         
+
+        json = (json === '' || json === '{}')  ? '{}' : json;
+
         const { message, level, createdAt, origin } = JSON.parse(json);
         if(!message || !level || !createdAt) {
             throw new Error("Invalid log format");

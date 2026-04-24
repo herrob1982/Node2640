@@ -2,6 +2,8 @@ node_modules/
 *.log
 
 logs/
-.env
+# .env
 
 mongo/
+postgres/
+/src/generated/prisma

@@ -12,6 +12,9 @@ Crear scripts para dev, build y start (Más sobre TS-Node-dev aquí)
 #dev
 1. Clonar el archivo env.template a .env
 2. Configurar las variables de entorno
+3. Levantar bdd con docker compose up -d
+
+
 
 ```
 MAILER_EMAIL = 

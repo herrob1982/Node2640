@@ -1,25 +1,30 @@
+import { LogSeverityLevel } from "../domain/entities/log.entity";
 import { CheckService } from "../domain/use-cases/checks/check-service";
 import { SendEmailLogs } from "../domain/use-cases/email/send--emial-logs";
 import { FileSystemDataSource } from "../infrastructure/datasources/file-system.datasource";
+import { MongoLogDataSource } from "../infrastructure/datasources/mongo-log.datasource";
 import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository.impl";
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email.service";
 
 
-const fileSystemLogRepository = new LogRepositoryImpl( new FileSystemDataSource() );
+const logRepository = new LogRepositoryImpl( 
+    //new FileSystemDataSource() 
+    new MongoLogDataSource()
+);
 
 
 
 export class Server {
 
-    static start() {
+    static async start() {
         console.log("Servidor iniciado...");
 
         CronService.startJob(
-             '*/15 * * * * *', 
+             '*/900 * * * * *', 
              () => {
                         new CheckService(
-                            fileSystemLogRepository,
+                            logRepository,
                          () => console.log("Éxito en la solicitud a Google"),
                             (error) => console.error("Error en la solicitud a Google:", error)
                         ).execute("https://www.google.com");
@@ -44,15 +49,16 @@ export class Server {
             //         }
             // );
         
-
+        const logs = await logRepository.getLogs(LogSeverityLevel.low);
+        console.log("Logs de nivel bajo:", logs);
         
 
     //   const email = new EmailService(fileSystemLogRepository);  
     //   email.sendEmailWithFileSystem("rchicaiza@sicobra.com");
 
-            const emailService = new EmailService();
+           // const emailService = new EmailService();
 
-            new SendEmailLogs( emailService, fileSystemLogRepository).execute("rchicaiza@sicobra.com");
+          //  new SendEmailLogs( emailService, logRepository).execute("rchicaiza@sicobra.com");
 
     }
 

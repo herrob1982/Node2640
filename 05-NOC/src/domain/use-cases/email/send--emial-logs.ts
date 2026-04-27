@@ -35,7 +35,7 @@ export class SendEmailLogs implements SendEmailLogsUseCase {
                     origin: "SendEmailLogs.ts"
                 });
 
-            this.logRepository.saveLog(log);
+            await this.logRepository.saveLog(log);
                
 
         
@@ -47,7 +47,7 @@ export class SendEmailLogs implements SendEmailLogsUseCase {
                     origin: "SendEmailLogs.ts"
                 });
 
-                this.logRepository.saveLog(log);
+                await this.logRepository.saveLog(log);
 
 
             return false;

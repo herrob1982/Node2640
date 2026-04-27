@@ -4,7 +4,7 @@ import { LogRepository } from "../../repository/log.repository";
 import { LogEntity, LogSeverityLevel } from "../../entities/log.entity";
 
 
-interface CheckServiceUseCase {
+interface CheckServiceMultipleUseCase {
     execute(url: string): Promise<boolean>;
 }
 
@@ -12,11 +12,11 @@ type SuccessCallBack = (() => void) | undefined;
 type ErrorCallBack = ((error: string) => void ) | undefined;
 
 
-export class CheckService implements CheckServiceUseCase {
+export class CheckServiceMultiple implements CheckServiceMultipleUseCase {
 
    
     constructor(  
-        private readonly logRepository: LogRepository,
+        private readonly logRepository: LogRepository[],
         private readonly successCallBack: SuccessCallBack,
         private readonly errorCallBack: ErrorCallBack) 
         
@@ -25,6 +25,9 @@ export class CheckService implements CheckServiceUseCase {
 
     }
 
+    private callLogs(log: LogEntity) {
+        this.logRepository.forEach(repository => repository.saveLog(log));
+    }
 
     public async execute(url: string): Promise<boolean> {
        
@@ -43,7 +46,8 @@ export class CheckService implements CheckServiceUseCase {
                 origin: "Check-Service.ts"
             });
 
-            await this.logRepository.saveLog(log);
+
+           this.callLogs(log);
             this.successCallBack && this.successCallBack();
            // console.log(`La solicitud a ${url} fue exitosa.`);
             return true;
@@ -58,7 +62,7 @@ export class CheckService implements CheckServiceUseCase {
                 level: LogSeverityLevel.high,
                 origin: "Check-Service.ts"
             });
-            await this.logRepository.saveLog(log);
+            this.callLogs(log);
 
 
             this.errorCallBack && this.errorCallBack(errorMessage);

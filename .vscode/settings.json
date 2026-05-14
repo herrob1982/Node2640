@@ -7,5 +7,6 @@
     "'.*?'"   ,   // ignora strings entre comillas simples
     "//.*",          // comentarios de una línea
     "/\\*[\\s\\S]*?\\*/"  // comentarios multilínea
-    ]
+    ],
+    "prisma.pinToPrisma6": false
 }
